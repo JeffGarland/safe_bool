@@ -1,23 +1,23 @@
-# beman.exemplar: A Beman Library Exemplar
+# beman.safe_bool: Type to replace C++ bool which is subject to bad conversions
 
 <!--
 SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 -->
 
 <!-- markdownlint-disable-next-line line-length -->
-![Library Status](https://raw.githubusercontent.com/bemanproject/beman/refs/heads/main/images/badges/beman_badge-beman_library_under_development.svg) ![Continuous Integration Tests](https://github.com/bemanproject/exemplar/actions/workflows/ci_tests.yml/badge.svg) ![Lint Check (pre-commit)](https://github.com/bemanproject/exemplar/actions/workflows/pre-commit.yml/badge.svg) [![Coverage](https://coveralls.io/repos/github/bemanproject/exemplar/badge.svg?branch=main)](https://coveralls.io/github/bemanproject/exemplar?branch=main) ![Standard Target](https://github.com/bemanproject/beman/blob/main/images/badges/cpp29.svg) [![Compiler Explorer Example](https://img.shields.io/badge/Try%20it%20on%20Compiler%20Explorer-grey?logo=compilerexplorer&logoColor=67c52a)](https://godbolt.org/z/4qEPK87va)
+![Library Status](https://raw.githubusercontent.com/bemanproject/beman/refs/heads/main/images/badges/beman_badge-beman_library_under_development.svg) ![Continuous Integration Tests](https://github.com/JeffGarland/safe_bool/actions/workflows/ci_tests.yml/badge.svg) ![Lint Check (pre-commit)](https://github.com/JeffGarland/safe_bool/actions/workflows/pre-commit.yml/badge.svg) [![Coverage](https://coveralls.io/repos/github/JeffGarland/safe_bool/badge.svg?branch=main)](https://coveralls.io/github/JeffGarland/safe_bool?branch=main) ![Standard Target](https://github.com/bemanproject/beman/blob/main/images/badges/cpp29.svg) [![Compiler Explorer Example](https://img.shields.io/badge/Try%20it%20on%20Compiler%20Explorer-grey?logo=compilerexplorer&logoColor=67c52a)](https://www.example.com)
 
-`beman.exemplar` is a minimal C++ library conforming to [The Beman Standard](https://github.com/bemanproject/beman/blob/main/docs/beman_standard.md).
+`beman.safe_bool` is a minimal C++ library conforming to [The Beman Standard](https://github.com/bemanproject/beman/blob/main/docs/beman_standard.md).
 This can be used as a template for those intending to write Beman libraries.
 It may also find use as a minimal and modern  C++ project structure.
 
-**Implements**: `std::identity` proposed in [Standard Library Concepts (P0898R3)](https://wg21.link/P0898R3).
+**Implements**: `std::identity` proposed in [Standard Library Concepts (P0000R0)](https://wg21.link/P0000R0).
 
 **Status**: [Under development and not yet ready for production use.](https://github.com/bemanproject/beman/blob/main/docs/beman_library_maturity_model.md#under-development-and-not-yet-ready-for-production-use)
 
 ## License
 
-`beman.exemplar` is licensed under the Apache License v2.0 with LLVM Exceptions.
+`beman.safe_bool` is licensed under the Apache License v2.0 with LLVM Exceptions.
 
 ## Usage
 
@@ -27,12 +27,12 @@ Its direct usage is usually not needed.
 
 ### Usage: default projection in constrained algorithms
 
-The following code snippet illustrates how we can achieve a default projection using `beman::exemplar::identity`:
+The following code snippet illustrates how we can achieve a default projection using `beman::safe_bool::identity`:
 
 ```cpp
-#include <beman/exemplar/identity.hpp>
+#include <beman/safe_bool/identity.hpp>
 
-namespace exe = beman::exemplar;
+namespace exe = beman::safe_bool;
 
 // Class with a pair of values.
 struct Pair
@@ -95,7 +95,7 @@ This project requires at least the following to build:
 * (Test Only) GoogleTest
 
 You can disable building tests by setting CMake option
-[`BEMAN_EXEMPLAR_BUILD_TESTS`](#beman_exemplar_build_tests) to `OFF`
+[`BEMAN_SAFE_BOOL_BUILD_TESTS`](#beman_safe_bool_build_tests) to `OFF`
 when configuring the project.
 
 Even when tests are being built and run, some of them will not be compiled
@@ -145,7 +145,7 @@ requires minimal setup.
 
 Click the following badge to create a codespace:
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/bemanproject/exemplar)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/bemanproject/safe_bool)
 
 For more documentation on GitHub codespaces, please see
 [this doc](https://docs.github.com/en/codespaces/).
@@ -289,18 +289,18 @@ The precise version of GoogleTest that will be used is maintained in
 
 ### Project specific configure arguments
 
-Project-specific options are prefixed with `BEMAN_EXEMPLAR`.
+Project-specific options are prefixed with `BEMAN_SAFE_BOOL`.
 You can see the list of available options with:
 
 ```bash
-cmake -LH -S . -B build | grep "BEMAN_EXEMPLAR" -C 2
+cmake -LH -S . -B build | grep "BEMAN_SAFE_BOOL" -C 2
 ```
 
 <details>
 
 <summary> Details of CMake arguments. </summary>
 
-#### `BEMAN_EXEMPLAR_BUILD_TESTS`
+#### `BEMAN_SAFE_BOOL_BUILD_TESTS`
 
 Enable building tests and test infrastructure. Default: ON.
 Values: `{ ON, OFF }`.
@@ -308,73 +308,73 @@ Values: `{ ON, OFF }`.
 You can configure the project to have this option turned off via:
 
 ```bash
-cmake -B build -S . -DCMAKE_CXX_STANDARD=20 -DBEMAN_EXEMPLAR_BUILD_TESTS=OFF
+cmake -B build -S . -DCMAKE_CXX_STANDARD=20 -DBEMAN_SAFE_BOOL_BUILD_TESTS=OFF
 ```
 
 > [!TIP]
 > Because this project requires GoogleTest for running tests,
-> disabling `BEMAN_EXEMPLAR_BUILD_TESTS` avoids the project from
+> disabling `BEMAN_SAFE_BOOL_BUILD_TESTS` avoids the project from
 > cloning GoogleTest from GitHub.
 
-#### `BEMAN_EXEMPLAR_BUILD_EXAMPLES`
+#### `BEMAN_SAFE_BOOL_BUILD_EXAMPLES`
 
 Enable building examples. Default: ON. Values: { ON, OFF }.
 
 </details>
 
-## Integrate beman.exemplar into your project
+## Integrate beman.safe_bool into your project
 
-To use `beman.exemplar` in your C++ project,
-include an appropriate `beman.exemplar` header from your source code.
+To use `beman.safe_bool` in your C++ project,
+include an appropriate `beman.safe_bool` header from your source code.
 
 ```c++
-#include <beman/exemplar/identity.hpp>
+#include <beman/safe_bool/identity.hpp>
 ```
 
 > [!NOTE]
 >
-> `beman.exemplar` headers are to be included with the `beman/exemplar/` prefix.
+> `beman.safe_bool` headers are to be included with the `beman/safe_bool/` prefix.
 > Altering include search paths to spell the include target another way (e.g.
 > `#include <identity.hpp>`) is unsupported.
 
-The process for incorporating `beman.exemplar` into your project depends on the
+The process for incorporating `beman.safe_bool` into your project depends on the
 build system being used. Instructions for CMake are provided in following sections.
 
-### Incorporating `beman.exemplar` into your project with CMake
+### Incorporating `beman.safe_bool` into your project with CMake
 
 For CMake based projects,
-you will need to use the `beman.exemplar` CMake module
-to define the `beman::exemplar` CMake target:
+you will need to use the `beman.safe_bool` CMake module
+to define the `beman::safe_bool` CMake target:
 
 ```cmake
-find_package(beman.exemplar REQUIRED)
+find_package(beman.safe_bool REQUIRED)
 ```
 
-You will also need to add `beman::exemplar` to the link libraries of
-any libraries or executables that include `beman.exemplar` headers.
+You will also need to add `beman::safe_bool` to the link libraries of
+any libraries or executables that include `beman.safe_bool` headers.
 
 ```cmake
-target_link_libraries(yourlib PUBLIC beman::exemplar)
+target_link_libraries(yourlib PUBLIC beman::safe_bool)
 ```
 
-### Produce beman.exemplar static library
+### Produce beman.safe_bool static library
 
-You can include exemplar's headers locally
-by producing a static `libbeman.exemplar.a` library.
+You can include safe_bool's headers locally
+by producing a static `libbeman.safe_bool.a` library.
 
 ```bash
 cmake --workflow --preset gcc-release
-cmake --install build/gcc-release --prefix /opt/beman.exemplar
+cmake --install build/gcc-release --prefix /opt/beman.safe_bool
 ```
 
-This will generate such directory structure at `/opt/beman.exemplar`.
+This will generate such directory structure at `/opt/beman.safe_bool`.
 
 ```txt
-/opt/beman.exemplar
+/opt/beman.safe_bool
 ├── include
 │   └── beman
-│       └── exemplar
+│       └── safe_bool
 │           └── identity.hpp
 └── lib
-    └── libbeman.exemplar.a
+    └── libbeman.safe_bool.a
 ```
