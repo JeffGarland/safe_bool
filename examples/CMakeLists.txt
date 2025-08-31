@@ -1,4 +1,7 @@
-# SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+# SPDX-License-Identifier: Boost Software License, Version 1.0.
+# Copyright Jeff Garland 2025
+
+
 
 set(ALL_EXAMPLES safe_bool_usage)
 

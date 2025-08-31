@@ -1,7 +1,8 @@
-# SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+# SPDX-License-Identifier: Boost Software License, Version 1.0.
+# Copyright Jeff Garland 2025
 # Codeowners for reviews on PRs
 
-# Note(river):
+
 # **Please understand how codeowner file work before uncommenting anything in this section:**
 # https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
 #
@@ -20,4 +21,4 @@
 # .pre-commit-config.yaml @wusatosi # Add other project owners here
 # .markdownlint.yaml @wusatosi # Add other project owners here
 
-*  @ednolan @bretbrownjr @camio @dietmarkuehl @neatudarius @steve-downey @wusatosi
+*  @jeffgarland

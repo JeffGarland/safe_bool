@@ -1,4 +1,6 @@
-# SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+# SPDX-License-Identifier: Boost Software License, Version 1.0.
+# Copyright Jeff Garland 2025
+
 
 include(FetchContent)
 
@@ -18,5 +20,3 @@ target_link_libraries(
     PRIVATE safe_bool Catch2::Catch2WithMain
 )
 
-include(GoogleTest)
-gtest_discover_tests(safe_bool.tests.basic)

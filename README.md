@@ -1,7 +1,8 @@
 # beman.safe_bool: Type to replace C++ bool which is subject to bad conversions
 
 <!--
-SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+SPDX-License-Identifier: Boost Software License, Version 1.0.
+Copyright Jeff Garland 2025
 -->
 
 <!-- markdownlint-disable-next-line line-length -->
