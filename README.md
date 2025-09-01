@@ -6,7 +6,7 @@ Copyright Jeff Garland 2025
 -->
 
 <!-- markdownlint-disable-next-line line-length -->
-![Library Status](https://raw.githubusercontent.com/bemanproject/beman/refs/heads/main/images/badges/beman_badge-beman_library_under_development.svg) ![Continuous Integration Tests](https://github.com/JeffGarland/safe_bool/actions/workflows/ci_tests.yml/badge.svg) ![Lint Check (pre-commit)](https://github.com/JeffGarland/safe_bool/actions/workflows/pre-commit.yml/badge.svg) [![Coverage](https://coveralls.io/repos/github/JeffGarland/safe_bool/badge.svg?branch=main)](https://coveralls.io/github/JeffGarland/safe_bool?branch=main) ![Standard Target](https://github.com/bemanproject/beman/blob/main/images/badges/cpp29.svg) [![Compiler Explorer Example](https://img.shields.io/badge/Try%20it%20on%20Compiler%20Explorer-grey?logo=compilerexplorer&logoColor=67c52a)](https://www.example.com)
+![Library Status](https://raw.githubusercontent.com/bemanproject/beman/refs/heads/main/images/badges/beman_badge-beman_library_under_development.svg) ![Continuous Integration Tests](https://github.com/JeffGarland/safe_bool/actions/workflows/ci_tests.yml/badge.svg) ![Lint Check (pre-commit)](https://github.com/JeffGarland/safe_bool/actions/workflows/pre-commit.yml/badge.svg) [![Coverage](https://coveralls.io/repos/github/JeffGarland/safe_bool/badge.svg?branch=main)](https://coveralls.io/github/JeffGarland/safe_bool?branch=main)
 
 `safe_bool` fixes basic C++ bool bad conversions.
 
@@ -24,6 +24,21 @@ While `safe_bool` is NOT a Beman library, it complies to [The Beman Standard](ht
 ```cpp
 #include <safe_bool/safe_bool.hpp>
 
+using namespace safe;
+
+  //hits deleted constructor-normal bool allows
+  //safe_bool sb1("bar"); 
+  //safe_bool sb2{"bar"};
+  //safe_bool sb3 = "bar"; 
+  //safe_bool sb3 = 1; //int
+  safe_bool sb4(true);
+  if (sb4) { println( "good"); }
+  safe_bool sb5; //false
+  if (!sb5) { println( "good"); }
+  safe_bool sb6 = true;
+  if (sb6) { println("good"); }
+  if ( sb4 == sb6 ) { println("good"); }
+  if ( sb4 != sb5 ) { println("good"); }
 
 ```
 
