@@ -1,42 +1,29 @@
-// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+// SPDX-License-Identifier: Boost Software License, Version 1.0.
+// Copyright Jeff Garland 2025
 
-#ifndef BEMAN_SAFE_BOOL_IDENTITY_HPP
-#define BEMAN_SAFE_BOOL_IDENTITY_HPP
+#ifndef SAFE_BOOL_HPP
+#define SAFE_BOOL_HPP
 
-// C++ Standard Library: std::identity equivalent.
-// See https://eel.is/c++draft/func.identity:
-//
-// 22.10.12 Class identity  [func.identity]
-//
-// struct identity {
-//   template<class T>
-//     constexpr T&& operator()(T&& t) const noexcept;
-//
-//   using is_transparent = unspecified;
-// };
-//
-// template<class T>
-//   constexpr T&& operator()(T&& t) const noexcept;
-//
-// Effects: Equivalent to: return std::forward<T>(t);
 
-#include <utility> // std::forward
+#include <concepts>
 
-namespace beman::safe_bool {
+namespace safe {
 
-struct __is_transparent; // not defined
+class safe_bool
+{
+    bool value = false;
+ public:
+    constexpr safe_bool() = default;
+    constexpr ~safe_bool() = default;
+    constexpr safe_bool(const safe_bool&) = default; //not explicit for operator=
+    constexpr safe_bool(bool v) noexcept : value(v) {}
+    safe_bool(std::integral auto) = delete; // rm integral conversions
+    safe_bool(char*) = delete; //crush char* conversion
+    constexpr explicit operator bool() const noexcept { return value; }
+    constexpr bool operator==(const safe_bool&) const = default;
+};  
 
-// A function object that returns its argument unchanged.
-struct identity {
-    // Returns `t`.
-    template <class T>
-    constexpr T&& operator()(T&& t) const noexcept {
-        return std::forward<T>(t);
-    }
 
-    using is_transparent = __is_transparent;
-};
+} // namespace safe
 
-} // namespace beman::safe_bool
-
-#endif // BEMAN_SAFE_BOOL_IDENTITY_HPP
+#endif // SAFE_BOOL_HPP

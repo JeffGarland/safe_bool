@@ -1,4 +1,4 @@
-# beman.safe_bool: Type to replace C++ bool which is subject to bad conversions
+# safe_bool: Type to replace C++ bool which has bad default conversions
 
 <!--
 SPDX-License-Identifier: Boost Software License, Version 1.0.
@@ -8,78 +8,22 @@ Copyright Jeff Garland 2025
 <!-- markdownlint-disable-next-line line-length -->
 ![Library Status](https://raw.githubusercontent.com/bemanproject/beman/refs/heads/main/images/badges/beman_badge-beman_library_under_development.svg) ![Continuous Integration Tests](https://github.com/JeffGarland/safe_bool/actions/workflows/ci_tests.yml/badge.svg) ![Lint Check (pre-commit)](https://github.com/JeffGarland/safe_bool/actions/workflows/pre-commit.yml/badge.svg) [![Coverage](https://coveralls.io/repos/github/JeffGarland/safe_bool/badge.svg?branch=main)](https://coveralls.io/github/JeffGarland/safe_bool?branch=main) ![Standard Target](https://github.com/bemanproject/beman/blob/main/images/badges/cpp29.svg) [![Compiler Explorer Example](https://img.shields.io/badge/Try%20it%20on%20Compiler%20Explorer-grey?logo=compilerexplorer&logoColor=67c52a)](https://www.example.com)
 
-`beman.safe_bool` is a minimal C++ library conforming to [The Beman Standard](https://github.com/bemanproject/beman/blob/main/docs/beman_standard.md).
-This can be used as a template for those intending to write Beman libraries.
-It may also find use as a minimal and modern  C++ project structure.
+`safe_bool` fixes basic C++ bool bad conversions.
 
-**Implements**: `std::identity` proposed in [Standard Library Concepts (P0000R0)](https://wg21.link/P0000R0).
+While `safe_bool` is NOT a Beman library, it complies to [The Beman Standard](https://github.com/bemanproject/beman/blob/main/docs/beman_standard.md) as applicable.
 
 **Status**: [Under development and not yet ready for production use.](https://github.com/bemanproject/beman/blob/main/docs/beman_library_maturity_model.md#under-development-and-not-yet-ready-for-production-use)
 
 ## License
 
-`beman.safe_bool` is licensed under the Apache License v2.0 with LLVM Exceptions.
+`safe_bool` is licensed under the Boost Software License 1.0. Some utilities in this repo are under the Apache software license.
 
 ## Usage
 
-`std::identity` is a function object type whose `operator()` returns its argument unchanged.
-`std::identity` serves as the default projection in constrained algorithms.
-Its direct usage is usually not needed.
-
-### Usage: default projection in constrained algorithms
-
-The following code snippet illustrates how we can achieve a default projection using `beman::safe_bool::identity`:
 
 ```cpp
-#include <beman/safe_bool/identity.hpp>
+#include <safe_bool/safe_bool.hpp>
 
-namespace exe = beman::safe_bool;
-
-// Class with a pair of values.
-struct Pair
-{
-    int n;
-    std::string s;
-
-    // Output the pair in the form {n, s}.
-    // Used by the range-printer if no custom projection is provided (default: identity projection).
-    friend std::ostream &operator<<(std::ostream &os, const Pair &p)
-    {
-        return os << "Pair" << '{' << p.n << ", " << p.s << '}';
-    }
-};
-
-// A range-printer that can print projected (modified) elements of a range.
-// All the elements of the range are printed in the form {element1, element2, ...}.
-// e.g., pairs with identity: Pair{1, one}, Pair{2, two}, Pair{3, three}
-// e.g., pairs with custom projection: {1:one, 2:two, 3:three}
-template <std::ranges::input_range R,
-          typename Projection>
-void print(const std::string_view rem, R &&range, Projection projection = exe::identity>)
-{
-    std::cout << rem << '{';
-    std::ranges::for_each(
-        range,
-        [O = 0](const auto &o) mutable
-        { std::cout << (O++ ? ", " : "") << o; },
-        projection);
-    std::cout << "}\n";
-};
-
-int main()
-{
-    // A vector of pairs to print.
-    const std::vector<Pair> pairs = {
-        {1, "one"},
-        {2, "two"},
-        {3, "three"},
-    };
-
-    // Print the pairs using the default projection.
-    print("\tpairs with beman: ", pairs);
-
-    return 0;
-}
 
 ```
 
@@ -87,36 +31,35 @@ Full runnable examples can be found in [`examples/`](examples/).
 
 ## Dependencies
 
+## Integrate safe_bool into your project
+
+`safe_bool` is a header-only library and is available only on g++-13 and up, or clang 19 and up -- in C++20 mode.
+
+tbd: Note that modules support is currently tested only on clang++-19 and above and g++-15.
+
+As a header only library no building is required to use in a project -- simply make
+the `include` directory available add add the following to your source.
+
+
 ### Build Environment
 
 This project requires at least the following to build:
 
-* A C++ compiler that conforms to the C++17 standard or greater
-* CMake 3.25 or later
-* (Test Only) GoogleTest
+* A C++ compiler that conforms to the C++20 standard or greater
+* CMake 3.28 or later
+* (Test Only) Catch2
 
-You can disable building tests by setting CMake option
-[`BEMAN_SAFE_BOOL_BUILD_TESTS`](#beman_safe_bool_build_tests) to `OFF`
-when configuring the project.
+### Build Dependencies
 
-Even when tests are being built and run, some of them will not be compiled
-unless the provided compiler supports **C++20** ranges.
+The library itself has no build dependencies other than Catch2 for testing.
+And for building cmake and ninja.  Makefiles are supported in non-modular builds.
 
-> [!TIP]
->
-> The logs indicate examples disabled due to lack of compiler support.
->
-> For example:
->
-> ```txt
-> -- Looking for __cpp_lib_ranges
-> -- Looking for __cpp_lib_ranges - not found
-> CMake Warning at examples/CMakeLists.txt:12 (message):
->   Missing range support! Skip: identity_as_default_projection
->
->
-> Examples to be built: identity_direct_usage
-> ```
+Build-time dependencies:
+
+- `cmake`
+- `ninja`, `make`, or another CMake-supported build system
+  - CMake defaults to "Unix Makefiles" on POSIX systems
+- `catch2` for building tests
 
 ### Supported Platforms
 

@@ -5,10 +5,9 @@ cmake_minimum_required(VERSION 3.28...4.1)
 
 project(
     safe_bool
-    library
     DESCRIPTION "Type to replace C++ bool which is subject to bad conversions"
     LANGUAGES CXX
-    VERSION 2.1.1
+    VERSION 0.0.0
 )
 
 # [CMAKE.SKIP_TESTS]
@@ -31,12 +30,19 @@ option(
     ${PROJECT_IS_TOP_LEVEL}
 )
 
-include(CTest)
+add_library(safe_bool INTERFACE)
+target_sources(
+   safe_bool
+   INTERFACE
+   FILE_SET HEADERS
+   BASE_DIRS include
+   FILES include/safe_bool/safe_bool.hpp
+)
 
-add_subdirectory(src/beman/safe_bool)
 
 if(SAFE_BOOL_BUILD_TESTS)
-    add_subdirectory(tests/beman/safe_bool)
+    include(CTest)
+    add_subdirectory(tests/safe_bool)
 endif()
 
 if(SAFE_BOOL_BUILD_EXAMPLES)

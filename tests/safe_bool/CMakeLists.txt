@@ -13,10 +13,13 @@ FetchContent_MakeAvailable(Catch2)
 
 include(Catch)
 
+
 add_executable(safe_bool.tests.basic)
 target_sources(safe_bool.tests.basic PRIVATE basic.test.cpp)
 target_link_libraries(
     safe_bool.tests.basic
     PRIVATE safe_bool Catch2::Catch2WithMain
 )
+catch_discover_tests(safe_bool.tests.basic)
+
 
