@@ -10,6 +10,29 @@ Copyright Jeff Garland 2025
 
 `safe_bool` fixes basic C++ bool bad conversions.
 
+Conversions to bool are a mess in c++.  Being able to assign a `char*` to a bool is almost certainly not
+desired. And yet, you can - with random results.  If you're on the right compiler with the right
+warnings enabled you might get a warning, but most likely not. It's not just characters though. All integral
+types silently convert to bool.
+
+```cpp
+
+  bool b = "false"; //clang warn with -Wconversion
+  //bool b2{"true"}; //gcc warn, clang error
+  int i = b;
+  if ( b == i ) {
+    println("eyeroll"); // executes
+  }
+  if ( b ) {
+    println("true"); // executes
+  }
+  else {
+    println("false");
+  }
+
+```
+see this for some details: https://godbolt.org/z/v9KvM4c15
+
 While `safe_bool` is NOT a Beman library, it complies to [The Beman Standard](https://github.com/bemanproject/beman/blob/main/docs/beman_standard.md) as applicable.
 
 **Status**: [Under development and not yet ready for production use.](https://github.com/bemanproject/beman/blob/main/docs/beman_library_maturity_model.md#under-development-and-not-yet-ready-for-production-use)
