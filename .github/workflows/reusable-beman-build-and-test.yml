@@ -143,7 +143,6 @@ jobs:
         shell: bash
         run: |
           cmake --build build --config ${{ steps.vars.outputs.build_config }} --parallel --verbose
-#          cmake --build build --config ${{ steps.vars.outputs.build_config }} --target all_verify_interface_header_sets
           cmake --install build --config ${{ steps.vars.outputs.build_config }} --prefix /opt/beman.package
           ls -R /opt/beman.package
       - name: Test
