@@ -13,7 +13,6 @@ FetchContent_MakeAvailable(Catch2)
 
 include(Catch)
 
-
 add_executable(safe_bool.tests.basic)
 target_sources(safe_bool.tests.basic PRIVATE basic.test.cpp)
 target_link_libraries(
@@ -22,4 +21,13 @@ target_link_libraries(
 )
 catch_discover_tests(safe_bool.tests.basic)
 
+# compile fail checks
+
+include(compile-fail.cmake)
+
+add_compile_fail_test(char_convert char-cnvrt-cmpl-fail.test.cpp safe_bool)
+add_compile_fail_test(charptr_construct charptr-cnstrct-cmpl-fail.test.cpp safe_bool)
+add_compile_fail_test(char_construct  char-cnstrct-cmpl-fail.test.cpp safe_bool)
+add_compile_fail_test(float_construct float-cnstrct-cmpl-fail.test.cpp safe_bool)
+add_compile_fail_test(int_construct int-cnstrct-cmpl-fail.test.cpp safe_bool)
 
