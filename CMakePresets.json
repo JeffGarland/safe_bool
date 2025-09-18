@@ -24,6 +24,7 @@
       "name": "_release-base",
       "hidden": true,
       "cacheVariables": {
+        "CMAKE_CXX_STANDARD": "26",
         "CMAKE_BUILD_TYPE": "RelWithDebInfo"
       }
     },
