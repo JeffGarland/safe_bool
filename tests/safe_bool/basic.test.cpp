@@ -10,8 +10,9 @@
 
 using namespace safe;
 
-TEST_CASE("safe bool construction,comparison, conversion", "[constructors-comparison]") {
+bool f( safe_bool sb) { return bool(sb); }
 
+TEST_CASE("safe bool construction,comparison, conversion", "[constructors-comparison]") {
   safe_bool sb4(true);
   REQUIRE( sb4 == true );
   safe_bool sb5; //false
@@ -22,7 +23,18 @@ TEST_CASE("safe bool construction,comparison, conversion", "[constructors-compar
   REQUIRE( sb4 != sb5 );
   safe_bool sb7 = sb6;
   REQUIRE( sb7 );
- // if ( sb4 < sb6 ) { println("good"); } // no conversion
+  safe_bool sb8{};
+  REQUIRE( !sb8 ); // false
+  bool b = f({});
+  REQUIRE( !b ); // false
+  safe_bool sb9 = sb7 && sb8;
+  REQUIRE( !sb9 );
+  safe_bool sb10 = sb7 || sb8;
+  REQUIRE( sb10 );
+  safe_bool sb11 = sb7 || (sb8 && sb10);
+  REQUIRE( sb11 );
+
+  // if ( sb4 < sb6 ) { println("good"); } // no conversion
 
 
 }

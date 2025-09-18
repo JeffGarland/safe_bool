@@ -14,11 +14,15 @@
 
 namespace safe {
 
+  template<typename T>
+  concept non_bool_integral = std::integral<T> && !std::same_as<bool, T>;
+
 /** This class is a drop in replacement for regular bool that prevents
  *  any of the strange integral conversions allowed by C++. It is
  *  somewhat astonishing to learn that all the following compiles:
  *@code
      bool b = "false"; // sets to true
+     safe_bool b = "false"; // compile error
      bool b1 = 1.5f;   // wut would it mean?
      // more https://godbolt.org/z/jY61zEzns
  *@endcode
@@ -34,14 +38,27 @@ class safe_bool
  public:
     constexpr safe_bool() = default;
     constexpr ~safe_bool() = default;
-    constexpr safe_bool(const safe_bool&) = default; //not explicit for operator=
-    constexpr safe_bool(bool v) noexcept : value(v) {}
-  //    safe_bool(std::integral auto) = delete; // rm integral conversions
-    safe_bool(float) = delete; // rm integral conversions
-    safe_bool(char*) = delete; //crush char* conversion
-    safe_bool(char)  = delete; //crush char* conversion
+    constexpr safe_bool(const safe_bool&) = default;
+    constexpr safe_bool(bool v) noexcept : value(v) {} //not explicit for operator=
+    constexpr safe_bool(non_bool_integral auto) = delete ("integral conversion denied");
+    constexpr safe_bool(float) = delete("float conversion denied");
+    constexpr safe_bool(char*) = delete; // char* conversion
+    constexpr safe_bool& operator=(const safe_bool& other) = default;
+
     constexpr explicit operator bool() const noexcept { return value; }
+
     constexpr bool operator==(const safe_bool&) const = default;
+    template<typename B>
+    constexpr bool operator==(B b) const
+      requires std::is_same_v<bool, B>
+    { return b == this->value; }
+
+    constexpr safe_bool operator&&(const safe_bool& other) const noexcept {
+       return safe_bool(this->value && other.value);
+    }
+    constexpr safe_bool operator||(const safe_bool& other) const noexcept {
+       return safe_bool(this->value || other.value);
+    }
 };  
 
 
